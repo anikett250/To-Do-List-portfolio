@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Dashboard</title>
+    <style>
+        /* Basic Styling */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    background-color: #B43C27;
+    /* Dark Orange */
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar .logo {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.navbar .nav-links {
+    list-style-type: none;
+    display: flex;
+}
+
+.navbar .nav-links li {
+    margin: 0 15px;
+}
+
+.navbar .nav-links li a {
+    color: white;
+    text-decoration: none;
+}
+
+.navbar .nav-links li a:hover {
+    text-decoration: underline;
+}
+
+/* Board Container */
+.board-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+/* Board Columns */
+.board-column {
+    background-color: #F4F2F2;
+    width: 22%;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.column-header {
+    background-color: #B43C27;
+    /* Dark Orange */
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 8px;
+}
+
+.column-header h2 {
+    margin: 0;
+    font-size: 1.4rem;
+}
+
+.column-header .add-task {
+    background-color: #742719;
+    /* Darker shade of orange */
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.column-header .add-task:hover {
+    background-color: #F45235;
+    /* Lighter shade of orange */
+}
+
+/* Task List */
+.task-list {
+    margin-top: 15px;
+}
+
+.task-card {
+    background-color: white;
+    padding: 15px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.task-card p {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.task-card .delete-btn {
+    background: none;
+    border: none;
+    color: #742719;
+    /* Darker shade of orange */
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+
+.task-card .delete-btn:hover {
+    color: #F45235;
+    /* Lighter shade of orange */
+}
+
+/* Modern Modal Styles */
+.modal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    width: 400px;
+    max-width: 100%;
+    text-align: center;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.modal-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #B43C27;
+    /* Dark Orange */
+}
+
+textarea {
+    width: 100%;
+    height: 120px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    resize: vertical;
+    box-sizing: border-box;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+button {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#cancelBtn {
+    background-color: #742719;
+    /* Dark Orange */
+    color: white;
+}
+
+#cancelBtn:hover {
+    background-color: #F45235;
+    /* Lighter Orange */
+}
+
+#saveBtn {
+    background-color: #DA492F;
+    /* Lighter Orange */
+    color: white;
+}
+
+#saveBtn:hover {
+    background-color: #F45235;
+    /* Lighter Orange */
+}
+
+/* Drag Over Styles */
+.drag-over {
+    background-color: rgba(244, 81, 52, 0.2);
+    /* Light Shade of Orange */
+}
+
+/* Styles for Dragging */
+.dragging {
+    opacity: 0.5;
+}
+
+/* Highlighting the column when dragging over */
+.drag-over {
+    background-color: rgba(244, 81, 52, 0.2);
+    /* Light Shade of Orange */
+}
+
+/* Optional: Add a transition to the column when dragging */
+.board-column {
+    transition: background-color 0.3s ease;
+}
+
+    </style>
+</head>
+<body>
+        <nav class="navbar">
+          <div class="logo">TaskBoard</div>
+          <ul class="nav-links">
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="#">Projects</a></li>
+            <li><a href="#">Teams</a></li>
+            <li><a href="#">Settings</a></li>
+          </ul>
+        </nav>
+      
+        <main class="board-container">
+          <div class="board-column">
+            <div class="column-header">
+              <h2>To-do</h2>
+              <button class="add-task">+</button>
+            </div>
+            <div class="task-list" id="todo">
+            </div>
+          </div>
+          <!-- Add this modal HTML just before the closing </body> tag -->
+      <div class="modal" id="addTaskModal">
+          <div class="modal-content">
+            <h2>Add New Task</h2>
+            <textarea id="taskDescription" placeholder="Enter task description..."></textarea>
+            <div class="modal-actions">
+              <button id="cancelBtn">Cancel</button>
+              <button id="saveBtn">Save Task</button>
+            </div>
+          </div>
+        </div>
+        
+      
+          <div class="board-column">
+            <div class="column-header">
+              <h2>This Week</h2>
+              <button class="add-task">+</button>
+            </div>
+            <div class="task-list" id="this-week">
+              <div class="task-card">
+              </div>
+            </div>
+          </div>
+      
+          <div class="board-column">
+            <div class="column-header">
+              <h2>In Progress</h2>
+              <button class="add-task">+</button>
+            </div>
+            <div class="task-list" id="in-progress">
+              <div class="task-card">
+              </div>
+            </div>
+          </div>
+      
+          <div class="board-column">
+            <div class="column-header">
+              <h2>Done</h2>
+              <button class="add-task">+</button>
+            </div>
+            <div class="task-list" id="done">
+              <div class="task-card">
+              </div>
+            </div>
+          </div>
+    <script>
+        // Get all the columns and task lists
+const columns = document.querySelectorAll('.board-column');
+
+// Loop through each column and add drag events
+columns.forEach(column => {
+  const taskList = column.querySelector('.task-list');
+
+  taskList.addEventListener('dragover', (e) => {
+    e.preventDefault(); // This allows us to drop the item
+    column.classList.add('drag-over');
+  });
+
+  taskList.addEventListener('dragleave', () => {
+    column.classList.remove('drag-over');
+  });
+
+  taskList.addEventListener('drop', (e) => {
+    e.preventDefault(); // Prevent default behavior
+    column.classList.remove('drag-over');
+    
+    const draggedTask = document.querySelector('.dragging');
+    taskList.appendChild(draggedTask); // Move the task to the new column
+    draggedTask.classList.remove('dragging');
+  });
+});
+
+// Add the dragging functionality
+const taskCards = document.querySelectorAll('.task-card');
+
+taskCards.forEach(task => {
+  task.setAttribute('draggable', true);
+
+  task.addEventListener('dragstart', (e) => {
+    task.classList.add('dragging');
+  });
+
+  task.addEventListener('dragend', () => {
+    task.classList.remove('dragging');
+  });
+});
+
+// Add functionality to create new tasks via popup window
+const addButtons = document.querySelectorAll('.add-task');
+addButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    openTaskPopup(button);
+  });
+});
+
+function openTaskPopup(button) {
+  // Create the popup window HTML structure
+  const popup = document.createElement('div');
+  popup.classList.add('task-popup');
+  
+  const popupContent = document.createElement('div');
+  popupContent.classList.add('popup-content');
+  
+  const taskInput = document.createElement('input');
+  taskInput.type = 'text';
+  taskInput.placeholder = 'Enter task details';
+  taskInput.classList.add('task-input');
+  
+  const addTaskButton = document.createElement('button');
+  addTaskButton.textContent = 'Add Task';
+  addTaskButton.classList.add('add-task-btn');
+  
+  const cancelButton = document.createElement('button');
+  cancelButton.textContent = 'Cancel';
+  cancelButton.classList.add('cancel-btn');
+  
+  addTaskButton.addEventListener('click', () => {
+    const taskText = taskInput.value.trim();
+    if (taskText) {
+      const taskCard = document.createElement('div');
+      taskCard.classList.add('task-card');
+      taskCard.setAttribute('draggable', true);
+
+      const taskParagraph = document.createElement('p');
+      taskParagraph.textContent = taskText;
+
+      const deleteButton = document.createElement('button');
+      deleteButton.classList.add('delete-btn');
+      deleteButton.textContent = '🗑️';
+
+      deleteButton.addEventListener('click', () => {
+        taskCard.remove();
+      });
+
+      taskCard.appendChild(taskParagraph);
+      taskCard.appendChild(deleteButton);
+
+      taskCard.addEventListener('dragstart', () => {
+        taskCard.classList.add('dragging');
+      });
+
+      taskCard.addEventListener('dragend', () => {
+        taskCard.classList.remove('dragging');
+      });
+
+      // Append the task to the correct column
+      const columnId = button.closest('.board-column').querySelector('h2').textContent.toLowerCase().replace(' ', '-');
+      const column = document.getElementById(columnId);
+      column.appendChild(taskCard);
+    }
+    
+    // Close the popup after adding the task
+    document.body.removeChild(popup);
+  });
+
+  cancelButton.addEventListener('click', () => {
+    document.body.removeChild(popup);
+  });
+
+  popupContent.appendChild(taskInput);
+  popupContent.appendChild(addTaskButton);
+  popupContent.appendChild(cancelButton);
+  
+  popup.appendChild(popupContent);
+  document.body.appendChild(popup);
+}
+
+// Styles for the popup
+const style = document.createElement('style');
+style.innerHTML = `
+  .task-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    z-index: 1000;
+    width: 300px;
+  }
+
+  .popup-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .task-input {
+    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .add-task-btn, .cancel-btn {
+    padding: 10px;
+    margin: 5px 0;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+
+  .add-task-btn {
+    background-color: #F45235;
+    color: white;
+  }
+
+  .cancel-btn {
+    background-color: #ccc;
+  }
+
+  .add-task-btn:hover {
+    background-color: #DA492F;
+  }
+
+  .cancel-btn:hover {
+    background-color: #999;
+  }
+`;
+document.head.appendChild(style);
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,227 @@
+/* Basic Styling */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    background-color: #B43C27;
+    /* Dark Orange */
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar .logo {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.navbar .nav-links {
+    list-style-type: none;
+    display: flex;
+}
+
+.navbar .nav-links li {
+    margin: 0 15px;
+}
+
+.navbar .nav-links li a {
+    color: white;
+    text-decoration: none;
+}
+
+.navbar .nav-links li a:hover {
+    text-decoration: underline;
+}
+
+/* Board Container */
+.board-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+/* Board Columns */
+.board-column {
+    background-color: #F4F2F2;
+    width: 22%;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.column-header {
+    background-color: #B43C27;
+    /* Dark Orange */
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 8px;
+}
+
+.column-header h2 {
+    margin: 0;
+    font-size: 1.4rem;
+}
+
+.column-header .add-task {
+    background-color: #742719;
+    /* Darker shade of orange */
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.column-header .add-task:hover {
+    background-color: #F45235;
+    /* Lighter shade of orange */
+}
+
+/* Task List */
+.task-list {
+    margin-top: 15px;
+}
+
+.task-card {
+    background-color: white;
+    padding: 15px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.task-card p {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.task-card .delete-btn {
+    background: none;
+    border: none;
+    color: #742719;
+    /* Darker shade of orange */
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+
+.task-card .delete-btn:hover {
+    color: #F45235;
+    /* Lighter shade of orange */
+}
+
+/* Modern Modal Styles */
+.modal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    width: 400px;
+    max-width: 100%;
+    text-align: center;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.modal-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #B43C27;
+    /* Dark Orange */
+}
+
+textarea {
+    width: 100%;
+    height: 120px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    resize: vertical;
+    box-sizing: border-box;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+button {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#cancelBtn {
+    background-color: #742719;
+    /* Dark Orange */
+    color: white;
+}
+
+#cancelBtn:hover {
+    background-color: #F45235;
+    /* Lighter Orange */
+}
+
+#saveBtn {
+    background-color: #DA492F;
+    /* Lighter Orange */
+    color: white;
+}
+
+#saveBtn:hover {
+    background-color: #F45235;
+    /* Lighter Orange */
+}
+
+/* Drag Over Styles */
+.drag-over {
+    background-color: rgba(244, 81, 52, 0.2);
+    /* Light Shade of Orange */
+}
+
+/* Styles for Dragging */
+.dragging {
+    opacity: 0.5;
+}
+
+/* Highlighting the column when dragging over */
+.drag-over {
+    background-color: rgba(244, 81, 52, 0.2);
+    /* Light Shade of Orange */
+}
+
+/* Optional: Add a transition to the column when dragging */
+.board-column {
+    transition: background-color 0.3s ease;
+}

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Task Board</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css"> <!-- We'll create this next -->
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">TaskBoard</div>
+    <ul class="nav-links">
+      <li><a href="#">Dashboard</a></li>
+      <li><a href="#">Projects</a></li>
+      <li><a href="#">Teams</a></li>
+      <li><a href="#">Settings</a></li>
+    </ul>
+  </nav>
+
+  <main class="board-container">
+    <div class="board-column">
+      <div class="column-header">
+        <h2>To-do</h2>
+        <button class="add-task">+</button>
+      </div>
+      <div class="task-list" id="todo">
+      </div>
+    </div>
+    <!-- Add this modal HTML just before the closing </body> tag -->
+<div class="modal" id="addTaskModal">
+    <div class="modal-content">
+      <h2>Add New Task</h2>
+      <textarea id="taskDescription" placeholder="Enter task description..."></textarea>
+      <div class="modal-actions">
+        <button id="cancelBtn">Cancel</button>
+        <button id="saveBtn">Save Task</button>
+      </div>
+    </div>
+  </div>
+  
+
+    <div class="board-column">
+      <div class="column-header">
+        <h2>This Week</h2>
+        <button class="add-task">+</button>
+      </div>
+      <div class="task-list" id="this-week">
+        <div class="task-card">
+        </div>
+      </div>
+    </div>
+
+    <div class="board-column">
+      <div class="column-header">
+        <h2>In Progress</h2>
+        <button class="add-task">+</button>
+      </div>
+      <div class="task-list" id="in-progress">
+        <div class="task-card">
+        </div>
+      </div>
+    </div>
+
+    <div class="board-column">
+      <div class="column-header">
+        <h2>Done</h2>
+        <button class="add-task">+</button>
+      </div>
+      <div class="task-list" id="done">
+        <div class="task-card">
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="script.js"></script> <!-- JS will add drag/delete functionality -->
+</body>
+</html>
